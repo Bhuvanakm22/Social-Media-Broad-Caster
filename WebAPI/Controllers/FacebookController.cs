@@ -1,9 +1,4 @@
-﻿using BoardCasterWebAPI.Model;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using System.Net;
-
-namespace BoardCasterWebAPI.Controllers
+﻿namespace BoardCasterWebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
@@ -21,7 +16,7 @@ namespace BoardCasterWebAPI.Controllers
         /// <param name=""></param>
         /// <returns></returns>
         [HttpPost("PostMessage")]
-        //[ProducesResponseType(typeof(APIResult<string>),200)]
+        [ProducesResponseType(typeof(APIResult<string>),200)]
         public async Task<IActionResult> PostMessage(string accessToken,[FromBody] FacebookUser facebookUser)
         {
             APIResult<string> endPointResult = new();

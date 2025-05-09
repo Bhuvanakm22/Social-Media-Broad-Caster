@@ -1,5 +1,4 @@
 using WebAPI.Middleware;
-using BoardCasterWebAPI.Model;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -36,7 +35,7 @@ app.UseExceptionHandleMiddleware();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-app.UseSwaggerUI();
+    app.UseSwaggerUI();
 //app.UseSwaggerUI(
 //    c=>
 //    {
