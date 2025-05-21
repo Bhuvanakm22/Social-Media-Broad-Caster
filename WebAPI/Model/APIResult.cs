@@ -9,10 +9,10 @@ namespace BoardCasterWebAPI.Model
         [DefaultValue(200)]
         public int ResponseCode { get; set; } 
         [DefaultValue("")]
-        public T Result { get; set; } 
+        public T? Result { get; set; } 
         
         [DefaultValue("Success")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
         
     }
 }

@@ -200,7 +200,7 @@ namespace BoardCasterWebAPI.Model
     {
 
         [JsonPropertyName("headers")]
-        public Dictionary<string, string> Headers { get; set; }
+        public Dictionary<string, string>? Headers { get; set; }
 
         /// <summary>
         /// Use this URL to upload the media

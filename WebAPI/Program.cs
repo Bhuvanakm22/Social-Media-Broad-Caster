@@ -1,3 +1,7 @@
+using BoardCasterWebAPI.Data;
+using BoardCasterWebAPI.Interfaces;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using WebAPI.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +12,20 @@ builder.Services.AddHttpClient();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+//To limit the number of API requests per second by using SlidingPolicy
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddSlidingWindowLimiter("SlidingPolicy", policy =>
+    {
+        policy.PermitLimit = 10;
+        policy.Window = TimeSpan.FromSeconds(10);
+        policy.SegmentsPerWindow = 10;
+        policy.QueueLimit = 10;
+        policy.QueueProcessingOrder = QueueProcessingOrder.NewestFirst;
+    });
+});
+
 builder.Services.AddSwaggerGen();
 //builder.Services.AddSwaggerGen(c =>
 //{
@@ -26,9 +44,18 @@ builder.Services.AddCors(
         });
     });
 
+//Register in Dependency Injection (DI)
+//DI patter that ensures loosly coupled
+builder.Services.AddSingleton<IMessageWriter, MessageWriter>();
+//builder.Services.AddTransient<ExceptionHandleMiddleware>();
+
 var app = builder.Build();
 
-//Custom middleware to track error
+//**********Need to check****************//
+//Use in Pipeline
+app.UseMiddleware<ExceptionHandleMiddleware>();
+
+//Custom error log middleware to track error
 app.UseExceptionHandleMiddleware();
 
 // Configure the HTTP request pipeline.

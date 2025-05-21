@@ -5,7 +5,6 @@
         public required string message {
             get;
             set;
-
         }
     }
 }
